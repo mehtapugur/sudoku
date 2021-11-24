@@ -1,4 +1,5 @@
 import numpy as np
+import threading
 
 sudoku = [
     [0, 0, 2, 0, 0, 0, 4, 0, 0],
@@ -47,3 +48,19 @@ def solve():
     print(sudoku)
 
 solve()
+
+
+def bir():
+    for i in range(1,1000):
+        print("aaa ", end="")
+
+
+def iki():
+    for i in range(1,1000):
+        print("bbb ", end="")
+
+t1 = threading.Thread(target=bir)
+t2 = threading.Thread(target=iki)
+
+t1.start()
+t2.start()
