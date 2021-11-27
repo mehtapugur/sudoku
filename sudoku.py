@@ -142,4 +142,118 @@ print(samourai)
 
 file.close()
 
+#################### samurai 1. parçanın çözümü
+
+import numpy as np
+
+# samourai matrisi tanimlama
+samourai = np.zeros((21,21))
+#samourai = np.array(samourai)
+
+#print(samourai)
+
+#txt dosyasini okuma modunda acma
+file = open("sudoku.txt","r")
+
+
+for i in range (21):
+    v=0
+    veri=file.readline()
+    for j in range (21):
+        if(i<6):                        #ilk 6 satiri txtden cekiyor
+            if(j>8 and j<12):
+                samourai[i][j]=0    #bosluk
+            else:
+                if(veri[v]=="*"):
+                    samourai[i][j]=0
+                    v=v+1
+                elif(veri[v]=="\n"):
+                    v=v+1
+                else:
+                    samourai[i][j]=int(veri[v])
+                    v=v+1
+        elif(i>5 and i<9):              # 7. 8. 9. satirlari cekiyor
+            if(veri[v]=='*'):
+                samourai[i][j]=0
+                v=v+1
+            elif(veri[v]=="\n"):
+                v=v
+            else:
+                samourai[i][j]=int(veri[v])
+                v=v+1
+        elif(i>8 and i<12):             #9 10 11. satirlar
+            if(j<6 or j>14):
+                samourai[i][j]=0    #bosluk
+            elif(j>5 and j<15):
+                if(veri[v]=="*"):
+                    samourai[i][j]=0
+                    v=v+1
+                elif(veri[v]=="\n"):
+                    v=v+1
+                else:
+                    samourai[i][j]=int(veri[v])
+                    v=v+1
+        elif(i>11 and i<15):            #12 13 14. satirlar
+            if(veri[v]=='*'):
+                samourai[i][j]=0
+                v=v+1
+            elif(veri[v]=="\n"):
+                v=v
+            else:
+                samourai[i][j]=int(veri[v])
+                v=v+1
+        elif(i>14):                     #son 6 satir
+            if(j>8 and j<12):
+                samourai[i][j]=0    #bosluk
+            else:
+                if(veri[v]=="*"):
+                    samourai[i][j]=0
+                    v=v+1
+                elif(veri[v]=="\n"):
+                    v=v+1
+                else:
+                    samourai[i][j]=int(veri[v])
+                    v=v+1
+
+
+print(samourai)
+print("\n\n")
+print(samourai[0][18])
+print(samourai[2][18])
+
+def uygun_mu(y, x, n):
+    global samourai
+    for i in range(9):
+        if samourai[i][x] == n:
+            return False
+
+    for i in range(9):
+        if samourai[y][i] == n:
+            return False
+
+    rangeX = (x // 3) * 3
+    rangeY = (y // 3) * 3
+    for i in range(rangeX, rangeX + 3):
+        for j in range(rangeY, rangeY + 3):
+            if samourai[j][i] == n:
+                return False
+    return True
+
+
+def solve():
+    global samourai
+    for i in range(9):
+        for j in range(9):
+            if samourai[i][j] == 0:
+                for k in range(1, 10):
+                    if uygun_mu(i, j, k):
+                        samourai[i][j] = k
+                        solve()
+                        samourai[i][j] = 0
+                return
+    print(samourai)
+
+solve()
+
+file.close()
 
