@@ -1,4 +1,41 @@
 # Samurai Sudoku
+  - 1. parça
+
+```py
+def uygun_mu(y, x, n):
+    global sudoku
+    for i in range(9):
+        if sudoku[i][x] == n:
+            return False
+
+    for i in range(9):
+        if sudoku[y][i] == n:
+            return False
+
+    rangeX = (x // 3) * 3
+    rangeY = (y // 3) * 3
+    for i in range(rangeX, rangeX + 3):
+        for j in range(rangeY, rangeY + 3):
+            if sudoku[j][i] == n:
+                return False
+    return True
+
+
+def solve():
+    global sudoku
+    for i in range(9):
+        for j in range(9):
+            if sudoku[i][j] == 0:
+                for k in range(1, 10):
+                    if uygun_mu(i, j, k):
+                        sudoku[i][j] = k
+                        solve()
+                        sudoku[i][j] = 0
+                return
+    print(sudoku)
+
+solve()
+```
 
   - 3. parça
 
