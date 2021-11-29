@@ -1,8 +1,10 @@
 import numpy as np
 import os
 import threading
+import time
 
 # samorai matrisi tanimlama
+start = time.time()
 
 samurai = np.zeros((21, 21))
 dizi_bir = np.zeros((9, 9))
@@ -21,6 +23,7 @@ fileIki = open("txt\\iki.txt", "a+")
 fileUc = open("txt\\uc.txt", "a+")
 fileDort = open("txt\\dort.txt", "a+")
 fileBes = open("txt\\bes.txt", "a+")
+databaseFile = open("database.txt", "a+")
 #fileYaz.close()
 
 a = 0
@@ -184,8 +187,8 @@ def dosyaya_yazdir5(arr):
         fileBes.write("\n")
     fileBes.close()
 
-print(samurai)
-print("\n\n")
+print("Samurai Sudoku'nun ilk hali: \n", samurai)
+print("\n")
 #print(samurai[0][18])
 #print(samurai[2][18])
 #print("\n\n")
@@ -210,6 +213,7 @@ def uygun_mu(y, x, n):
     return True
 
 def solve():
+    bir_basla = time.time()
     global a
     if (a == 0):
         global samurai
@@ -221,11 +225,16 @@ def solve():
                             samurai[i][j] = k
                             solve()
                             samurai[i][j] = 0
+                            bilgi = "samurai[" + str(i) +"]["+ str(j)  +"] noktasına " + str(k) +" değeri verildi\n"
+                            databaseFile.write(bilgi)
                     return
-        print("Solve 1: \n", samurai)
+        #print("Solve 1: \n", samurai)
         dosyaya_yazdir(samurai)
         a = a + 1
+        bir_bitir = time.time()
+        print("Birinci kare çözüldü: ", bir_bitir - bir_basla)
         #yaz(samurai)
+
 
 def uygun_mu_iki(y, x, n):
     global samurai
@@ -246,6 +255,7 @@ def uygun_mu_iki(y, x, n):
     return True
 
 def solve_iki():
+    iki_basla = time.time()
     global b
     if (b == 0):
         global samurai
@@ -257,10 +267,14 @@ def solve_iki():
                             samurai[i][j] = k
                             solve_iki()
                             samurai[i][j] = 0
+                            bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
+                            databaseFile.write(bilgi)
                     return
-        print("Solve 2: \n", samurai)
+        #print("Solve 2: \n", samurai)
         dosyaya_yazdir2(samurai)
         b = b + 1
+        iki_bitir = time.time()
+        print("İkinci kare çözüldü: ", iki_bitir - iki_basla)
 
 def uygun_mu_uc(y, x, n):
     global samurai
@@ -281,6 +295,7 @@ def uygun_mu_uc(y, x, n):
     return True
 
 def solve_uc():
+    uc_basla = time.time()
     global c
     if (c == 0):
         global samurai
@@ -292,10 +307,14 @@ def solve_uc():
                             samurai[i][j] = k
                             solve_uc()
                             samurai[i][j] = 0
+                            bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
+                            databaseFile.write(bilgi)
                     return
-        print("Solve 3: \n", samurai)
+        #print("Solve 3: \n", samurai)
         dosyaya_yazdir3(samurai)
         c = c + 1
+        uc_bitir = time.time()
+        print("Üçüncü kare çözüldü: ", uc_bitir - uc_basla)
 
 def uygun_mu_dort(y, x, n):
     global samurai
@@ -316,6 +335,7 @@ def uygun_mu_dort(y, x, n):
     return True
 
 def solve_dort():
+    dort_basla = time.time()
     global d
     if (d == 0):
         global samurai
@@ -327,12 +347,14 @@ def solve_dort():
                             samurai[i][j] = k
                             solve_dort()
                             samurai[i][j] = 0
-                    #print("samurai[", i, "][", j, "] koordinatına ", k, " eklendi\n")
+                            bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
+                            databaseFile.write(bilgi)
                     return
-        #print("samurai[", i, "][", j, "] koordinatına ", k, " eklendi:\n", samurai)
-        print("Solve 4: \n", samurai)
+        #print("Solve 4: \n", samurai)
         dosyaya_yazdir4(samurai)
         d = d + 1
+        dort_bitir = time.time()
+        print("Dördüncü kare çözüldü: ", dort_bitir - dort_basla)
 
 # i     j      k
 def uygun_mu_bes(y, x, n):
@@ -354,21 +376,26 @@ def uygun_mu_bes(y, x, n):
     return True
 
 def solve_bes():
-        global e
-        if(e == 0):
-            global samurai
-            for i in range(6, 15):
-                for j in range(6, 15):
-                    if samurai[i][j] == 0:
-                        for k in range(1, 10):
-                            if uygun_mu_bes(i, j, k):
-                                samurai[i][j] = k
-                                solve_bes()
-                                samurai[i][j] = 0
-                        return
-            print("Solve 5: \n", samurai)
-            dosyaya_yazdir5(samurai)
-            e = e + 1
+    bes_basla = time.time()
+    global e
+    if(e == 0):
+        global samurai
+        for i in range(6, 15):
+            for j in range(6, 15):
+                if samurai[i][j] == 0:
+                    for k in range(1, 10):
+                        if uygun_mu_bes(i, j, k):
+                            samurai[i][j] = k
+                            solve_bes()
+                            samurai[i][j] = 0
+                            bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
+                            databaseFile.write(bilgi)
+                    return
+        #print("Solve 5: \n", samurai)
+        dosyaya_yazdir5(samurai)
+        e = e + 1
+        bes_bitir = time.time()
+        print("Beşinci kare çözüldü: ", bes_bitir - bes_basla)
 
 
 
@@ -467,7 +494,7 @@ def samurai_olustur():
                     samurai[i][j] = dizi_dort[i-12][j-12]
     print(samurai)
 
-print("Samurai çözümü: \n")
+print("\nSamurai Sudoku'nun çözümü: \n")
 samurai_olustur()
 
 file.close()
@@ -475,3 +502,6 @@ file.close()
 fileUc.close()
 fileDort.close()
 fileBes.close()
+databaseFile.close()
+end = time.time()
+print("Programın çalışma süresi: ", end - start)
