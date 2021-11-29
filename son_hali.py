@@ -422,9 +422,56 @@ print("dosya5 ve dizi_bes \n")
 dosya_oku5()
 print(dizi_bes)
 
-def samurai_olustur():
-    fileBir.seek(0)
+print("*********************************\n")
+print("en dıştaki samurai:\n", samurai)
 
+def samurai_olustur():
+    global samurai
+    global dizi_bir
+    global dizi_iki
+    global dizi_uc
+    global dizi_dort
+    global dizi_bes
+    for i in range(21):
+        for j in range(21):
+            if(i < 6):                        #ilk 6 satir
+                if(j > 8 and j < 12):
+                    samurai[i][j] = 0     #bosluk
+                else:
+                    if(j < 9):
+                        samurai[i][j] = dizi_bir[i][j]
+                    elif(j > 11):
+                        samurai[i][j] = dizi_iki[i][j-12]
+            elif(i > 5 and i < 9):              # 7. 8. 9. satirlari cekiyor
+                if(j < 6):
+                    samurai[i][j] = dizi_bir[i][j]
+                elif(j > 5 and j < 15):
+                    samurai[i][j] = dizi_bes[i-6][j-6]
+                else:
+                    samurai[i][j] = dizi_iki[i][j-12]
+            elif(i > 8 and i < 12):             #9 10 11. satirlar
+                if(j < 6 or j > 14):
+                    samurai[i][j] = 0    #bosluk
+                elif(j > 5 and j < 15):
+                    samurai[i][j] = dizi_bes[i-6][j-6]
+            elif(i > 11 and i < 15):              # 13 14 15. satirlar
+                if(j < 6):
+                    samurai[i][j] = dizi_uc[i-12][j]
+                elif(j > 5 and j < 15):
+                    samurai[i][j] = dizi_bes[i-6][j-6]
+                else:
+                    samurai[i][j] = dizi_dort[i-12][j-12]
+            elif(i > 14):              # 16 - 21 satirlari
+                if(j < 9):
+                    samurai[i][j] = dizi_uc[i-12][j]
+                elif(j > 8 and j < 12):
+                    samurai[i][j] = 0
+                else:
+                    samurai[i][j] = dizi_dort[i-12][j-12]
+    print(samurai)
+
+print("veeeeeeeeeeeeeeeeeeeeeee geliyor: \n")
+samurai_olustur()
 
 file.close()
 #fileYaz.close()
