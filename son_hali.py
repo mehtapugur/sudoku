@@ -6,6 +6,9 @@ import os
 samurai = np.zeros((21, 21))
 dizi_bir = np.zeros((9, 9))
 dizi_iki = np.zeros((9, 9))
+dizi_uc = np.zeros((9, 9))
+dizi_dort = np.zeros((9, 9))
+dizi_bes = np.zeros((9, 9))
 #samurai = np.array(samourai)
 
 #print(samurai)
@@ -102,6 +105,27 @@ def dosya_oku2():
         for j in range(9):
             dizi_iki[i][j] = int(veri[j])
 
+def dosya_oku3():
+    for i in range(9):
+        #v = 0
+        veri = fileUc.readline()
+        for j in range(9):
+            dizi_uc[i][j] = int(veri[j])
+
+def dosya_oku4():
+    for i in range(9):
+        #v = 0
+        veri = fileDort.readline()
+        for j in range(9):
+            dizi_dort[i][j] = int(veri[j])
+
+def dosya_oku5():
+    for i in range(9):
+        #v = 0
+        veri = fileBes.readline()
+        for j in range(9):
+            dizi_bes[i][j] = int(veri[j])
+
 
 def dosyaya_yazdir(arr):
     fileBir = open("txt\\bir.txt", "a+")
@@ -127,6 +151,7 @@ def dosyaya_yazdir2(arr):
     fileIki.close()
 
 def dosyaya_yazdir3(arr):
+    fileUc = open("txt\\uc.txt", "a+")
     fileUc.seek(0)
     for i in range(12,21):
         data = fileUc.readline()
@@ -134,8 +159,10 @@ def dosyaya_yazdir3(arr):
             fileUc.write(str(int(arr[i][j])))
             #data[j] = arr[i][j]
         fileUc.write("\n")
+    fileUc.close()
 
 def dosyaya_yazdir4(arr):
+    fileDort = open("txt\\dort.txt", "a+")
     fileDort.seek(0)
     for i in range(12, 21):
         data = fileDort.readline()
@@ -143,8 +170,10 @@ def dosyaya_yazdir4(arr):
             fileDort.write(str(int(arr[i][j])))
             #data[j] = arr[i][j]
         fileDort.write("\n")
+    fileDort.close()
 
 def dosyaya_yazdir5(arr):
+    fileBes = open("txt\\bes.txt", "a+")
     fileBes.seek(0)
     for i in range(6, 15):
         data = fileBes.readline()
@@ -152,6 +181,7 @@ def dosyaya_yazdir5(arr):
             fileBes.write(str(int(arr[i][j])))
             #data[j] = arr[i][j]
         fileBes.write("\n")
+    fileBes.close()
 
 print(samurai)
 print("\n\n")
@@ -371,14 +401,26 @@ def dosya_sil():
         print("Dosya mevcut değil")
 
 #dosya_sil()
-print("dosya2 ve sam \n")
+print("dosya2 ve dizi_iki \n")
 dosya_oku2()
-print(sam)
+print(dizi_iki)
 
 
-print("dosya1 ve dizi \n")
+print("dosya1 ve dizi_bir \n")
 dosya_oku1()
-print(dizi)
+print(dizi_bir)
+
+print("dosya3 ve dizi_uc \n")
+dosya_oku3()
+print(dizi_uc)
+
+print("dosya4 ve dizi_dort \n")
+dosya_oku4()
+print(dizi_dort)
+
+print("dosya5 ve dizi_bes \n")
+dosya_oku5()
+print(dizi_bes)
 
 def samurai_olustur():
     fileBir.seek(0)
