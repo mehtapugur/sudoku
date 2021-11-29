@@ -3,18 +3,14 @@ import os
 import threading
 import time
 
-# samorai matrisi tanimlama
 start = time.time()
-
+# samorai matrisi tanimlama
 samurai = np.zeros((21, 21))
 dizi_bir = np.zeros((9, 9))
 dizi_iki = np.zeros((9, 9))
 dizi_uc = np.zeros((9, 9))
 dizi_dort = np.zeros((9, 9))
 dizi_bes = np.zeros((9, 9))
-#samurai = np.array(samourai)
-
-#print(samurai)
 
 #txt dosyasini okuma modunda acma
 file = open("sudoku.txt", "r+")
@@ -24,7 +20,6 @@ fileUc = open("txt\\uc.txt", "a+")
 fileDort = open("txt\\dort.txt", "a+")
 fileBes = open("txt\\bes.txt", "a+")
 databaseFile = open("database.txt", "a+")
-#fileYaz.close()
 
 a = 0
 b = 0
@@ -32,6 +27,7 @@ c = 0
 d = 0
 e = 0
 
+#sudoku.txt okutup samurai sudoku oluştur
 def dosya_oku():
     for i in range(21):
         v = 0
@@ -101,7 +97,6 @@ def dosya_oku1():
         for j in range(9):
             dizi_bir[i][j] = int(veri[j])
 
-
 def dosya_oku2():
     for i in range(9):
         #v = 0
@@ -129,7 +124,6 @@ def dosya_oku5():
         veri = fileBes.readline()
         for j in range(9):
             dizi_bes[i][j] = int(veri[j])
-
 
 def dosyaya_yazdir(arr):
     fileBir = open("txt\\bir.txt", "a+")
@@ -189,9 +183,6 @@ def dosyaya_yazdir5(arr):
 
 print("Samurai Sudoku'nun ilk hali: \n", samurai)
 print("\n")
-#print(samurai[0][18])
-#print(samurai[2][18])
-#print("\n\n")
 
 def uygun_mu(y, x, n):
     global samurai
@@ -228,7 +219,6 @@ def solve():
                             bilgi = "samurai[" + str(i) +"]["+ str(j)  +"] noktasına " + str(k) +" değeri verildi\n"
                             databaseFile.write(bilgi)
                     return
-        #print("Solve 1: \n", samurai)
         dosyaya_yazdir(samurai)
         a = a + 1
         bir_bitir = time.time()
@@ -270,7 +260,6 @@ def solve_iki():
                             bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
                             databaseFile.write(bilgi)
                     return
-        #print("Solve 2: \n", samurai)
         dosyaya_yazdir2(samurai)
         b = b + 1
         iki_bitir = time.time()
@@ -310,7 +299,6 @@ def solve_uc():
                             bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
                             databaseFile.write(bilgi)
                     return
-        #print("Solve 3: \n", samurai)
         dosyaya_yazdir3(samurai)
         c = c + 1
         uc_bitir = time.time()
@@ -350,7 +338,6 @@ def solve_dort():
                             bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
                             databaseFile.write(bilgi)
                     return
-        #print("Solve 4: \n", samurai)
         dosyaya_yazdir4(samurai)
         d = d + 1
         dort_bitir = time.time()
@@ -391,21 +378,10 @@ def solve_bes():
                             bilgi = "samurai[" + str(i) + "][" + str(j) + "] noktasına " + str(k) + " değeri verildi\n"
                             databaseFile.write(bilgi)
                     return
-        #print("Solve 5: \n", samurai)
         dosyaya_yazdir5(samurai)
         e = e + 1
         bes_bitir = time.time()
         print("Beşinci kare çözüldü: ", bes_bitir - bes_basla)
-
-
-
-def yaz(arr):
-    global samurai
-    for i in range(9):
-        for j in range(9):
-            samurai[i][j] = arr[i][j]
-    print("bu arr: \n", arr)
-    return samurai
 
 t1 = threading.Thread(target=solve())
 t2 = threading.Thread(target=solve_iki())
@@ -419,35 +395,11 @@ t3.start()
 t4.start()
 t5.start()
 
-#("solve:\n")
-#solve()
-#print("solve2:\n")
-#solve_iki()
-#print("solve3:\n")
-#solve_uc()
-#print("solve4:\n")
-#solve_dort()
-#print("solve5:\n")
-#solve_bes()
-#dosyaya_yazdir2()
-
-#print("en dışta:\n", samurai)
-#print("*********************************\n")
-def dosya_sil():
-    if os.path.exists("txt\\bir.txt"):
-        os.remove("txt\\bir.txt")
-    else:
-        print("Dosya mevcut değil")
-
-#dosya_sil()
 dosya_oku2()
 dosya_oku1()
 dosya_oku3()
 dosya_oku4()
 dosya_oku5()
-
-#print("*********************************\n")
-#print("en dıştaki samurai:\n", samurai)
 
 def samurai_olustur():
     global samurai
@@ -498,7 +450,6 @@ print("\nSamurai Sudoku'nun çözümü: \n")
 samurai_olustur()
 
 file.close()
-#fileYaz.close()
 fileUc.close()
 fileDort.close()
 fileBes.close()
