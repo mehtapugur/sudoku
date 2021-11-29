@@ -4,7 +4,8 @@ import os
 # samorai matrisi tanimlama
 
 samurai = np.zeros((21, 21))
-sam = np.zeros((9, 9))
+dizi_bir = np.zeros((9, 9))
+dizi_iki = np.zeros((9, 9))
 #samurai = np.array(samourai)
 
 #print(samurai)
@@ -17,6 +18,12 @@ fileUc = open("txt\\uc.txt", "a+")
 fileDort = open("txt\\dort.txt", "a+")
 fileBes = open("txt\\bes.txt", "a+")
 #fileYaz.close()
+
+a = 0
+b = 0
+c = 0
+d = 0
+e = 0
 
 def dosya_oku():
     for i in range(21):
@@ -80,15 +87,24 @@ def dosya_oku():
 
 dosya_oku()
 
+def dosya_oku1():
+    for i in range(9):
+        #v = 0
+        veri = fileBir.readline()
+        for j in range(9):
+            dizi_bir[i][j] = int(veri[j])
+
+
 def dosya_oku2():
     for i in range(9):
         #v = 0
         veri = fileIki.readline()
         for j in range(9):
-            sam[i][j] = int(veri[j])
+            dizi_iki[i][j] = int(veri[j])
 
 
 def dosyaya_yazdir(arr):
+    fileBir = open("txt\\bir.txt", "a+")
     fileBir.seek(0)
     for i in range(9):
         data = fileBir.readline()
@@ -163,19 +179,22 @@ def uygun_mu(y, x, n):
     return True
 
 def solve():
-    global samurai
-    for i in range(9):
-        for j in range(9):
-            if samurai[i][j] == 0:
-                for k in range(1, 10):
-                    if uygun_mu(i, j, k):
-                        samurai[i][j] = k
-                        solve()
-                        samurai[i][j] = 0
-                return
-    print(samurai)
-    dosyaya_yazdir(samurai)
-    #yaz(samurai)
+    global a
+    if (a == 0):
+        global samurai
+        for i in range(9):
+            for j in range(9):
+                if samurai[i][j] == 0:
+                    for k in range(1, 10):
+                        if uygun_mu(i, j, k):
+                            samurai[i][j] = k
+                            solve()
+                            samurai[i][j] = 0
+                    return
+        print(samurai)
+        dosyaya_yazdir(samurai)
+        a = a + 1
+        #yaz(samurai)
 
 def uygun_mu_iki(y, x, n):
     global samurai
@@ -196,18 +215,21 @@ def uygun_mu_iki(y, x, n):
     return True
 
 def solve_iki():
-    global samurai
-    for i in range(9):
-        for j in range(12,21):
-            if samurai[i][j] == 0:
-                for k in range(1, 10):
-                    if uygun_mu_iki(i, j, k):
-                        samurai[i][j] = k
-                        solve_iki()
-                        samurai[i][j] = 0
-                return
-    print(samurai)
-    dosyaya_yazdir2(samurai)
+    global b
+    if (b == 0):
+        global samurai
+        for i in range(9):
+            for j in range(12,21):
+                if samurai[i][j] == 0:
+                    for k in range(1, 10):
+                        if uygun_mu_iki(i, j, k):
+                            samurai[i][j] = k
+                            solve_iki()
+                            samurai[i][j] = 0
+                    return
+        print(samurai)
+        dosyaya_yazdir2(samurai)
+        b = b + 1
 
 def uygun_mu_uc(y, x, n):
     global samurai
@@ -228,18 +250,21 @@ def uygun_mu_uc(y, x, n):
     return True
 
 def solve_uc():
-    global samurai
-    for i in range(12,21):
-        for j in range(9):
-            if samurai[i][j] == 0:
-                for k in range(1, 10):
-                    if uygun_mu_uc(i, j, k):
-                        samurai[i][j] = k
-                        solve_uc()
-                        samurai[i][j] = 0
-                return
-    print(samurai)
-    dosyaya_yazdir3(samurai)
+    global c
+    if (c == 0):
+        global samurai
+        for i in range(12, 21):
+            for j in range(9):
+                if samurai[i][j] == 0:
+                    for k in range(1, 10):
+                        if uygun_mu_uc(i, j, k):
+                            samurai[i][j] = k
+                            solve_uc()
+                            samurai[i][j] = 0
+                    return
+        print(samurai)
+        dosyaya_yazdir3(samurai)
+        c = c + 1
 
 def uygun_mu_dort(y, x, n):
     global samurai
@@ -260,24 +285,28 @@ def uygun_mu_dort(y, x, n):
     return True
 
 def solve_dort():
-    global samurai
-    for i in range(12,21):
-        for j in range(12,21):
-            if samurai[i][j] == 0:
-                for k in range(1, 10):
-                    if uygun_mu_dort(i, j, k):
-                        samurai[i][j] = k
-                        solve_dort()
-                        samurai[i][j] = 0
-                print("samurai[", i, "][", j, "] koordinatına ", k, " eklendi\n")
-                return
-    #print("samurai[", i, "][", j, "] koordinatına ", k, " eklendi:\n", samurai)
-    print(samurai)
-    dosyaya_yazdir4(samurai)
+    global d
+    if (d == 0):
+        global samurai
+        for i in range(12, 21):
+            for j in range(12, 21):
+                if samurai[i][j] == 0:
+                    for k in range(1, 10):
+                        if uygun_mu_dort(i, j, k):
+                            samurai[i][j] = k
+                            solve_dort()
+                            samurai[i][j] = 0
+                    #print("samurai[", i, "][", j, "] koordinatına ", k, " eklendi\n")
+                    return
+        #print("samurai[", i, "][", j, "] koordinatına ", k, " eklendi:\n", samurai)
+        print(samurai)
+        dosyaya_yazdir4(samurai)
+        d = d + 1
 
+# i     j      k
 def uygun_mu_bes(y, x, n):
     global samurai
-    for i in range(6,15):
+    for i in range(6, 15):
         if samurai[i][x] == n:
             return False
 
@@ -294,18 +323,21 @@ def uygun_mu_bes(y, x, n):
     return True
 
 def solve_bes():
-    global samurai
-    for i in range(6,15):
-        for j in range(6,15):
-            if samurai[i][j] == 0:
-                for k in range(1, 10):
-                    if uygun_mu_bes(i, j, k):
-                        samurai[i][j] = k
-                        solve_bes()
-                        samurai[i][j] = 0
-                return
-    print(samurai)
-    dosyaya_yazdir5(samurai)
+        global e
+        if(e == 0):
+            global samurai
+            for i in range(6, 15):
+                for j in range(6, 15):
+                    if samurai[i][j] == 0:
+                        for k in range(1, 10):
+                            if uygun_mu_bes(i, j, k):
+                                samurai[i][j] = k
+                                solve_bes()
+                                samurai[i][j] = 0
+                        return
+            print(samurai)
+            dosyaya_yazdir5(samurai)
+            e = e + 1
 
 
 
@@ -342,6 +374,16 @@ def dosya_sil():
 print("dosya2 ve sam \n")
 dosya_oku2()
 print(sam)
+
+
+print("dosya1 ve dizi \n")
+dosya_oku1()
+print(dizi)
+
+def samurai_olustur():
+    fileBir.seek(0)
+
+
 file.close()
 #fileYaz.close()
 fileUc.close()
