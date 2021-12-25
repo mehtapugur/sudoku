@@ -1,4 +1,4 @@
-## Multithread Kullanılarak Samurai Sudoku Çözümü
+## Multithread Kullanarak Samurai Sudoku Çözümü
 
 ### Problem Tanımı:
 
