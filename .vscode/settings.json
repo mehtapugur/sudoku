@@ -1,0 +1,10 @@
+{
+  "[json]": {
+
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "python.pythonPath": "C:\Users\mehtap\AppData\Local\Programs\Python\Python310\python.exe"
+  }
+}
